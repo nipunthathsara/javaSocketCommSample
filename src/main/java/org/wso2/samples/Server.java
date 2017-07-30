@@ -3,7 +3,6 @@ package org.wso2.samples;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -31,11 +30,11 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        Server server = new Server(5, 9009);
+        Server server = new Server(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
         try {
             server.startServer();
         } catch (IOException e) {
-            System.out.println("Server stopped working");
+            System.out.println("Server stopped responding");
             e.printStackTrace();
         }
     }
