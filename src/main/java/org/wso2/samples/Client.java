@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Client {
 
-    private static int PORT = 9000;
+    private static int PORT = 9009;
     private static String host = "localhost";
     private static Socket connection;
 

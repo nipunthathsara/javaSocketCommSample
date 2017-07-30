@@ -8,7 +8,15 @@ import java.net.Socket;
 public class ClientThread extends Thread {
     private Socket client;
 
-    public ClientThread(Socket client){
+    public void setClient (Socket client){
+        this.client = client;
+    }
+
+    public ClientThread(){
+
+    }
+
+    public ClientThread(Socket client){//remove this cons.
         this.client = client;
     }
 
