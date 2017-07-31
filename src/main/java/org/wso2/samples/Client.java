@@ -14,7 +14,7 @@ public class Client {
     private static Socket connection;
 
     public static void main(String[] args) throws IOException {
-        PORT = Integer.parseInt(args[1]);
+        PORT = Integer.parseInt(args[0]);
         connection = new Socket(host, PORT);
 
         DataInputStream dataInputStream = new DataInputStream(connection.getInputStream());
