@@ -3,18 +3,24 @@ package org.wso2.samples;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 public class Server {
     private static int PORT;
     static Socket client;
     static ServerSocket ss;
     static ExecutorService executor;
-
-    public Server (int poolSize, int port){
-        PORT = port;
-        executor = Executors.newFixedThreadPool(poolSize);
+    static int SIZE;
+    static int MIN;
+    static int MAX;
+    public Server (int poolSize, int PORT, int SIZE, int MIN, int MAX){
+        Server.MAX = MAX;
+        Server.MIN=MIN;
+        Server.SIZE = SIZE;
+        Server.PORT = PORT;
+        BlockingQueue<Runnable> blockingQueue = new ArrayBlockingQueue(SIZE);
+        //executor = Executors.newFixedThreadPool(poolSize);
+        executor = new ThreadPoolExecutor(MIN, MAX, 1000, TimeUnit.MILLISECONDS, blockingQueue);
     }
 
     public void startServer()throws IOException{
@@ -30,7 +36,9 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        Server server = new Server(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+        Server server = new Server(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+        //poolSize, PORT, SIZE, MAX - pass these args to main
+        //MIN - hardcoded
         try {
             server.startServer();
         } catch (IOException e) {
