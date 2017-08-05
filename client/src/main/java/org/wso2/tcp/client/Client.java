@@ -20,10 +20,8 @@ public class Client {
     public static void main(String[] args) throws IOException {
         PORT = Integer.parseInt(args[0]);
         connection = new Socket(host, PORT);
-
         DataInputStream dataInputStream = new DataInputStream(connection.getInputStream());
-        //DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
-
+        //read from server and output
         System.out.println("Server response: " + dataInputStream.readInt());
     }
 }

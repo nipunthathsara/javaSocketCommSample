@@ -8,8 +8,11 @@ numberOfClients=$5
 mvn -f ./server/pom.xml clean install
 mvn -f ./client/pom.xml clean install
 
-java -cp ./server/target/server-1.0-SNAPSHOT.jar org.wso2.tcp.server.Server ${PORT} ${QUEUESIZE} ${MIN} ${MAX} &
-for((i=1;i<=${numberOfClients};i++))
+nohup java -cp ./server/target/server-1.0-SNAPSHOT.jar org.wso2.tcp.server.Server ${PORT} ${QUEUESIZE} ${MIN} ${MAX} &
+
+i=1; while [ $i -le ${numberOfClients} ];
 do
-java -cp ./client/target/client-1.0-SNAPSHOT.jar org.wso2.tcp.client.Client ${PORT}
+cmd="java -cp ./client/target/client-1.0-SNAPSHOT.jar org.wso2.tcp.client.Client ${PORT}"
+$cmd &
+i=$((i+1));
 done

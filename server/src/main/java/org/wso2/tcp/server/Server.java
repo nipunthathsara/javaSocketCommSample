@@ -23,10 +23,10 @@ public class Server {
      * @param max
      */
     public Server(int port, int queueSize, int min, int max) {
-        this.MAX = max;
-        this.MIN = min;
-        this.SIZE = queueSize;
-        this.PORT = port;
+        this.MAX = max;//maximum number of threads in pool
+        this.MIN = min;//minimum number of threads in pool
+        this.SIZE = queueSize;//size of the client queue
+        this.PORT = port;//server port
 
         //queue to handle requests
         BlockingQueue<Runnable> blockingQueue = new ArrayBlockingQueue(SIZE);
@@ -39,7 +39,6 @@ public class Server {
      */
     public void startServer() throws IOException {
         ss = new ServerSocket(PORT);
-        int poolSize = 10;
         System.out.println("Listening on: " + PORT);
 
         while (true) {
@@ -50,11 +49,42 @@ public class Server {
     }
 
     /**
+     * Method to shutdown the server
+     */
+    /**
+     * TODO Invoke this method by shell script
+     */
+//    Couldn't invoke by bash script, hence server will not shutdown when started by the script.
+//    Search for process id: sudo ss -lptn 'sport = :<PORT>
+//    Kill the process manually: sudo kill -9 <PID>
+    public void stopServer(){
+        //Terminating the thread poolb
+        try {
+            if (this.executor.awaitTermination(2, TimeUnit.SECONDS)) {
+                System.out.println("Client processes terminated successfully");
+            } else {
+                System.out.println("Forcing terminating client processes...");
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Problem terminating the client processes... " + e);
+        }
+        //Closing socket connections
+        try {
+            this.client.close();
+            this.ss.close();
+            System.out.println("Server shutdown successful!");
+        } catch (IOException e) {
+            System.out.println("Problem shutting down the server..." + e);
+        }
+    }
+
+    /**
      *
      * @param args
      */
     public static void main(String[] args) {
-        //PORT,Queue size, Min, Max - arguments
+        //Arguments - PORT,Queue size, Min, Max
         Server server = new Server(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
         try {
             server.startServer();
