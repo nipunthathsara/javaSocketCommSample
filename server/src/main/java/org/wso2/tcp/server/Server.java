@@ -13,10 +13,9 @@ public class Server {
     private Socket client;
     private ServerSocket ss;
     private ExecutorService executor;
-    private int SIZE ,MIN, MAX;
+    private int SIZE, MIN, MAX;
 
     /**
-     *
      * @param port
      * @param queueSize
      * @param min
@@ -34,7 +33,6 @@ public class Server {
     }
 
     /**
-     *
      * @throws IOException
      */
     public void startServer() throws IOException {
@@ -57,7 +55,7 @@ public class Server {
 //    Couldn't invoke by bash script, hence server will not shutdown when started by the script.
 //    Search for process id: sudo ss -lptn 'sport = :<PORT>
 //    Kill the process manually: sudo kill -9 <PID>
-    public void stopServer(){
+    public void stopServer() {
         //Terminating the thread poolb
         try {
             if (this.executor.awaitTermination(2, TimeUnit.SECONDS)) {
@@ -71,16 +69,17 @@ public class Server {
         }
         //Closing socket connections
         try {
-            this.client.close();
-            this.ss.close();
-            System.out.println("Server shutdown successful!");
+            if (client != null && ss != null) {
+                this.client.close();
+                this.ss.close();
+                System.out.println("Server shutdown successful!");
+            }
         } catch (IOException e) {
             System.out.println("Problem shutting down the server..." + e);
         }
     }
 
     /**
-     *
      * @param args
      */
     public static void main(String[] args) {
