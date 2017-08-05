@@ -1,7 +1,9 @@
 # javaSocketCommSample
 Sample project to demonstrate java socket communication
 
-Instructions on running...
-1. Run the shell script (execute.sh) - See arguments order
-2. Arguments order - PoolSize, Port, Number of clients, Queue size, Min threads, Max threads to be executed
-3. sh execute.sh 10 9000 15 100 10 20
+###Instructions on running...
+1. Run the shell script (run.sh) - See arguments order
+2. Arguments order - Port, Queue size, Minimum threads, Maximum threads, Number of clients to be executed.
+3. sh run.sh 9000 20 5 15 10
+
+

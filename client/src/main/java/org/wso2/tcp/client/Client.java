@@ -1,28 +1,29 @@
-package org.wso2.samples;
+package org.wso2.tcp.client;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
 
+/**
+ * TCP Client class
+ */
 public class Client {
 
     private static int PORT;
     private static String host = "localhost";
     private static Socket connection;
 
+    /**
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
-        PORT = Integer.parseInt(args[1]);
+        PORT = Integer.parseInt(args[0]);
         connection = new Socket(host, PORT);
 
         DataInputStream dataInputStream = new DataInputStream(connection.getInputStream());
-        DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
-        Scanner scanner = new Scanner(System.in);
+        //DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
 
-        System.out.println("Enter a number: ");
-        dataOutputStream.writeInt(scanner.nextInt());
         System.out.println("Server response: " + dataInputStream.readInt());
     }
 }

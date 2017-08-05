@@ -1,32 +1,35 @@
-package org.wso2.samples;
+package org.wso2.tcp.server;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+ * Class to process each client
+ */
 public class ClientThread extends Thread {
     private Socket client;
 
-    public void setClient (Socket client){
+    /**
+     * @param client
+     */
+    public void setClient(Socket client) {
         this.client = client;
     }
 
-    public ClientThread(){
+    public ClientThread() {}
 
-    }
-
-    public ClientThread(Socket client){//remove this cons.
+    /**
+     * @param client
+     */
+    public ClientThread(Socket client) {//remove this cons.
         this.client = client;
     }
 
-    public void run(){
+    public void run() {
         try {
-            DataInputStream dataInputStream = new DataInputStream(this.client.getInputStream());
             DataOutputStream dataOutputStream = new DataOutputStream(this.client.getOutputStream());
-
-            int number = dataInputStream.readInt();
-            dataOutputStream.writeInt(number * 2);
+            dataOutputStream.writeInt(999999999);
             System.out.println("Client processed");
         } catch (IOException e) {
             e.printStackTrace();
